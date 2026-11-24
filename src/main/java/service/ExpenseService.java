@@ -68,7 +68,6 @@ public class ExpenseService {
 
     public void addExpense(String description, String userInputAmount) throws SQLException {
         Optional<BigDecimal> amount = validateAmount(userInputAmount);
-        System.out.println("Amount returned by validation: " + amount.get());
         if (amount.isEmpty()) return;
 
         this.dbConnector.addExpense(description,amount.get());
