@@ -68,16 +68,17 @@ public class DBConnector {
             ResultSet rs = statement.executeQuery();
 
 
-            System.out.printf("%-5s %-20s %-10s %s%n", "ID", "Description", "Amount", "Created At");
+            System.out.printf("%-5s %-30s %-10s %-25s %-15s%n", "ID", "Description", "Amount", "Created At", "Updated At");
             boolean hasRecords = false;
             while(rs.next()){
                 hasRecords = true;
 
-                System.out.printf("%-5s %-20s %-10s %s%n",
+                System.out.printf("%-5s %-30s %-10s %-25s %-15s%n",
                         rs.getInt("id"),
                         rs.getString("description"),
                         rs.getBigDecimal("amount"),
-                        rs.getString("created_at"));
+                        rs.getString("created_at"),
+                        rs.getString("updated_at"));
             }
             if (!hasRecords) {
                 System.out.printf("%40s%n", "<< No records in Expenses Table >>");
@@ -101,7 +102,7 @@ public class DBConnector {
 
     public void updateExpense(int id, BigDecimal amount) throws SQLException {
         String UPDATE_SQL = """
-                UPDATE expenses SET amount = ? WHERE id = ?
+                UPDATE expenses SET amount = ?, updated_at = CURRENT_TIMESTAMP WHERE id = ?
                 """;
 
         try (Connection conn = this.connectDB();
@@ -122,7 +123,7 @@ public class DBConnector {
 
     public void updateExpense(int id, String description) throws SQLException {
         String UPDATE_SQL = """
-                UPDATE expenses SET description = ? WHERE id = ?
+                UPDATE expenses SET description = ?, updated_at=CURRENT_TIMESTAMP WHERE id = ?
                 """;
 
         try (Connection conn = this.connectDB();
@@ -143,7 +144,7 @@ public class DBConnector {
 
     public void updateExpense(int id, BigDecimal amount, String description) throws SQLException {
         String UPDATE_SQL = """
-                UPDATE expenses SET amount = ?, description = ? WHERE id = ?
+                UPDATE expenses SET amount = ?, description = ?, updated_at=CURRENT_TIMESTAMP WHERE id = ?
                 """;
 
         try (Connection conn = this.connectDB();

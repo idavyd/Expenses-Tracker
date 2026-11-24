@@ -24,14 +24,13 @@ public class Main {
                 service.deleteExpense(args[1]);
             }
 
-            case "deletedb" -> {
-                service.clearDB();
-            }
-
             case "update" -> {
                 service.updateExpense(args[1], args[2], args[3]);
             }
 
+            case "deletedb" -> {
+                service.clearDB();
+            }
             case "update-amount" -> {
                 service.updateExpenseAmount(args[1], args[2]);
             }
@@ -45,7 +44,13 @@ public class Main {
             }
 
             case "summary" -> {
-                service.summaryExpense();
+                if (args.length == 3) service.summaryExpense(args[1], args[2]);
+                if (args.length == 2){
+                    System.out.println("Update Command Must have Year and Month values");
+                    return;
+                }
+                if (args.length == 1) service.summaryExpense();
+
             }
 
             default -> System.out.printf("'%s' is not a valid command", action);
