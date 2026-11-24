@@ -137,3 +137,6 @@ The database table is initialized automatically when the application starts.
 - Add expense filtering by date.
 - Introduce categories for expenses.
 - Improve reporting and summary functionality.
+
+
+https://roadmap.sh/projects/expense-tracker
